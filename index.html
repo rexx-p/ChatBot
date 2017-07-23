@@ -67,20 +67,29 @@
                 msg: $('#m').val()
             });
             $('#m').val('');
-             $('#typing').html('');
+            $('#typing').html('');
             return false;
         });
 
+        $('#m').on('blur', function() {
+            socket.emit('stop typing', {});
+        });
+
         $('#m').bind('input', function() {
+
             socket.emit('typing', {
                 name: $('#name').val(),
                 msg: $('#m').val()
+
             });
         });
 
+        socket.on('stop typing', function(data) {
+            $('#typing').html('');
+        })
         socket.on('chat message', function(data) {
             $('#messages').append($('<li>').text(data.name + ' : ' + data.msg));
-             $('#typing').html('');
+            $('#typing').html('');
         });
 
         socket.on('typing', function(data) {
