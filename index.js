@@ -17,6 +17,12 @@ io.on('connection', function (socket) {
         io.emit('chat message', data);
     });
 
+    socket.on('stop typing', function (data) {
+        console.log('stop typing ');
+        io.emit('stop typing', data);
+    });
+
+
     socket.on('typing', function (data) {
         console.log('typing message : ' + JSON.stringify(data));
         socket.broadcast.emit('typing', data);
